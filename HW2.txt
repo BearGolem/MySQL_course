@@ -1,0 +1,30 @@
+1. Установите СУБД MySQL. Создайте в домашней директории файл .my.cnf, задав в нем логин и пароль, который указывался при установке.
+	- Win10. Создал в папке C:\windows файл my.cnf
+	[client]
+	user=root
+	pasword=******
+	в командной строке mysql открывается без ввода пароля и пользователя. Дамп создается так же без пароля и пользователя.
+	
+2. Создайте базу данных example, разместите в ней таблицу users, состоящую из двух столбцов, числового id и строкового name.
+	Команды последовательно в терминале:
+	mysql
+	CREATE DATABASE example;
+	CREATE TABLE users (id SERIAL, name VARCHAR(100) NOT NULL);
+	
+3. Создайте дамп базы данных example из предыдущего задания, разверните содержимое дампа в новую базу данных sample.
+	Продолжаем из п.2 (в PowerShell сменил кодировку на UTF-8)
+	exit
+	mysqldump example > example.sql
+	mysql
+	CREATE DATABASE sample;
+	exit
+	mysql sample < example.sql
+	mysql
+	USE sample;
+	SHOW TABLES; (убеждаемся в наличии таблицы users в безе sample)
+	
+4. (по желанию) Ознакомьтесь более подробно с документацией утилиты mysqldump. Создайте дамп единственной таблицы help_keyword базы данных mysql. Причем добейтесь того, чтобы дамп содержал только первые 100 строк таблицы.
+	5614 страниц мануала не осилил. Для дампа 100 строк из таблицы help_keyword в терминале вводим команду:
+	mysqldump mysql help_keyword --where="true limit 100" > tempdump.sql
+	
+	
